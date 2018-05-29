@@ -32,6 +32,8 @@ p=3 ### reproductive lag
 q= 1 ### order of moving average in errors 
 NS= length(unique(biomass$SECTION)) ### number of sites
 T= length(unique(biomass$YEAR)) ### number of time periods
+n.chains= 5 ### number of chains
+
 
 ### create a list of data for Stan
 stan_data <- list(
@@ -45,4 +47,6 @@ stan_data <- list(
 
 ### fit the model ###
 fit_q <- stan(file= "1_Code/Varma_q.stan", 
-                data=stan_data, iter=2000,warmup =1000,chains= 5,cores= 5)
+                data=stan_data, iter=2000,
+              warmup =1000,chains= n.chains,
+              cores= min(detectCores(),n.chains))
